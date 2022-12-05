@@ -10,3 +10,9 @@
   box-sizing: border-box;
   font-family: 'Bai Jamjuree', sans-serif;
 }
+
+
+
+.anchor {
+  @apply text-lime-500 text-2xl
+}
