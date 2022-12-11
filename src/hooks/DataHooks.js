@@ -25,3 +25,12 @@ export const NewsFetch = () => {
   }, { refetchOnWindowFocus: false });
 }
 
+
+export const BlogFetch = () => {
+  return useQuery('blog', () => {
+    return axios.get('https://638ebcce4ddca317d7e50201.mockapi.io/blogs', {
+    });
+
+  }, { refetchOnWindowFocus: false });
+}
+

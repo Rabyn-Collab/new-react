@@ -32,7 +32,7 @@ const News = () => {
       {data && data.data.articles.map((a, i) => {
         return <div key={a._id} className='mb-2'>
           <h1 className='text-2xl mb-5'>{a.title}</h1>
-          <img src={`${a.media}`} alt="" className='h-[500px] w-[700px] ' />
+          <img src={`${a.media}`} alt="" className='h-[500px] w-[200px] ' />
           <h1 className='my-2 text-slate-600'>{a.summary}</h1>
         </div>
       })}

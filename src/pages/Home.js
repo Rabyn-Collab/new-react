@@ -1,10 +1,15 @@
 import React from 'react'
-import News from './News'
+import Blogs from '../components/Blogs';
+import Header from '../components/Header'
+import { BlogFetch } from '../hooks/DataHooks'
 
 const Home = () => {
+
+  const { data, isLoading, error, isError } = BlogFetch();
+  console.log(data);
   return (
     <div>
-      <News />
+      {data && <Blogs blogs={data.data} />}
     </div>
   )
 }
