@@ -1,16 +1,17 @@
 import React from 'react'
 import Blogs from '../components/Blogs';
-import Header from '../components/Header'
 import { BlogFetch } from '../hooks/DataHooks'
+import News from './News';
 
 const Home = () => {
 
   const { data, isLoading, error, isError } = BlogFetch();
-  console.log(data);
+
   return (
-    <div>
-      {data && <Blogs blogs={data.data} />}
-    </div>
+    <div className=''>
+      {/* {data && <Blogs blogs={data.data} />} */}
+      <News />
+    </div >
   )
 }
 

@@ -1,12 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { NewsFetch } from '../hooks/DataHooks'
 
 const News = () => {
   const { isLoading, isError, data, isSuccess, error } = NewsFetch();
 
-
+  const navs = useNavigate();
   if (isLoading) {
-    return <h1>Loading</h1>
+    return <div className='h-[400px] w-[400px] mx-auto mt-10'>
+      <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_a2chheio.json" background="transparent" loop autoplay></lottie-player>
+    </div>
   }
 
   if (isError) {
@@ -14,26 +17,25 @@ const News = () => {
   }
 
 
-  // const d = {
-  //   data: {
-  //     articles: [
-  //       {
-  //         title: ''
-  //       },
-  //       {}
-  //     ],
-  //     status: ''
-  //   },
-  //   config: {}
-  // };
-  // console.log(data);
+  const handleClick = (article) => {
+    navs('/detail', {
+      state: {
+        title: article.title,
+        image: article.media,
+        detail: article.summary
+      }
+    });
+  }
+
   return (
-    <div className='p-10'>
+    <div className='grid grid-cols-4 gap-2 p-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 cursor-pointer' >
       {data && data.data.articles.map((a, i) => {
-        return <div key={a._id} className='mb-2'>
-          <h1 className='text-2xl mb-5'>{a.title}</h1>
-          <img src={`${a.media}`} alt="" className='h-[500px] w-[200px] ' />
-          <h1 className='my-2 text-slate-600'>{a.summary}</h1>
+        return <div key={i} className='shadow-xl' onClick={() => handleClick(a)}>
+          <img className='h-72 w-full ' src={`${a.media}`} alt="" />
+          <div className='p-2'>
+            <h1>{a.title}</h1>
+            <h2>News by {a.author}</h2>
+          </div>
         </div>
       })}
     </div>
