@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 const Header = () => {
   const id = '1245647';
   return (
-    <div className='shadow-lg bg-white p-4'>
+    <div className='shadow-lg bg-white p-4 sticky top-0 block w-full'>
       <div className='flex justify-between max-w-4xl mx-auto items-baseline '>
         <h1 className='text-2xl font-semibold text-pink-500'>Blogs</h1>
         <nav className='space-x-5 font-semibold '>

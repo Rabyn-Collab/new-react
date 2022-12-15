@@ -1,9 +1,13 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { NewsFetch } from '../hooks/DataHooks'
 
 const News = () => {
-  const { isLoading, isError, data, isSuccess, error } = NewsFetch();
+  const [catetgory, setCategory] = useState('hollywood');
+
+  const { isLoading, isError, data, isSuccess, error } = NewsFetch(catetgory);
+
 
   const navs = useNavigate();
   if (isLoading) {
@@ -27,17 +31,29 @@ const News = () => {
     });
   }
 
+  const changeNews = (query) => {
+    setCategory(query);
+  }
+
+  console.log(catetgory);
   return (
-    <div className='grid grid-cols-4 gap-2 p-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 cursor-pointer' >
-      {data && data.data.articles.map((a, i) => {
-        return <div key={i} className='shadow-xl' onClick={() => handleClick(a)}>
-          <img className='h-72 w-full ' src={`${a.media}`} alt="" />
-          <div className='p-2'>
-            <h1>{a.title}</h1>
-            <h2>News by {a.author}</h2>
+    <div>
+      <button onClick={() => changeNews('hollywood')} className='mr-4'>Hollywood</button>
+      <button onClick={() => changeNews('games')}>Games</button>
+      <div className='grid grid-cols-4 gap-2 p-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 cursor-pointer'>
+        {data && data.data.articles.map((a, i) => {
+          return <div key={i} className='shadow-xl' onClick={() => handleClick(a)}>
+            <img className='h-72 w-full ' src={`${a.media}`} alt="" />
+            <div className='p-2'>
+              <h1 className='sm:text-red-600'>{a.title}</h1>
+              <h2>News by {a.author}</h2>
+            </div>
           </div>
-        </div>
-      })}
+        })}
+      </div>
+
+
+
     </div>
   )
 }

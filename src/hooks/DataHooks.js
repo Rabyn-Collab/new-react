@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useQuery } from "react-query"
+import { useMutation, useQuery } from "react-query"
 
 
 // const minum = {
@@ -10,26 +10,35 @@ import { useQuery } from "react-query"
 
 // const { data, error } = minum;
 
-const getData = () => {
-  return axios.get('https://free-news.p.rapidapi.com/v1/search', {
-    params: {
-      q: 'games'
-    },
-    headers: {
-      'X-RapidAPI-Key': 'a5f227e63fmsh1662507e838257fp171f14jsna0bec840d641',
-      'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
-    }
-  });
-}
 
-export const NewsFetch = () => {
-  return useQuery('news', getData, { refetchOnWindowFocus: false });
+
+export const NewsFetch = (query) => {
+  return useQuery(['news', query], () => {
+    return axios.get('https://free-news.p.rapidapi.com/v1/search', {
+      params: {
+        q: query
+      },
+      headers: {
+        'X-RapidAPI-Key': 'a5f227e63fmsh1662507e838257fp171f14jsna0bec840d641',
+        'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
+      }
+    });
+  }, { refetchOnWindowFocus: false, retry: false });
 }
 
 export const BlogFetch = () => {
   return useQuery('blog', () => {
-    return axios.get('https://638ebcce4ddca317d7e50201.mockapi.io/blogs', {
+    return axios.get('https://639aa5e831877e43d672017c.mockapi.io/blogs', {
     });
+
+  }, { refetchOnWindowFocus: false });
+}
+
+
+
+export const BlogCrud = () => {
+  return useMutation((blog) => {
+    return axios.post('https://639aa5e831877e43d672017c.mockapi.io/blogs', blog);
 
   }, { refetchOnWindowFocus: false });
 }
