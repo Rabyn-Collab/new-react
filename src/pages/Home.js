@@ -1,20 +1,26 @@
 import React from 'react'
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import Blogs from '../components/Blogs';
-import CrudForm from '../components/CrudForm';
-import { BlogCrud, BlogFetch } from '../hooks/DataHooks'
-import News from './News';
+import { BlogFetch } from '../hooks/DataHooks'
+
 
 const Home = () => {
-  const { mutate, data, error } = BlogCrud();
+  const { data, error, isLoading, isError } = BlogFetch();
+
+  if (isLoading) {
+    return <div className='h-[400px] w-[400px] mx-auto mt-10'>
+      <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_a2chheio.json" background="transparent" loop autoplay></lottie-player>
+    </div>
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }
+
 
   return (
     <div className=''>
 
-      <CrudForm />
-
-      {/* {data && <Blogs blogs={data.data} />} */}
+      {data && <Blogs blogs={data.data} />}
       {/* <News /> */}
 
     </div >

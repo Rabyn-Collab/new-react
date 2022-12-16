@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import CrudForm from './components/CrudForm'
 import Header from './components/Header'
 import About from './pages/About'
 import Detail from './pages/Detail'
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='about' element={<About />} />
+        <Route path='crud' element={<CrudForm />} />
         <Route path='news' element={<News />} />
         <Route path='detail' element={<Detail />} />
         <Route path='*' element={<NotFound />} />

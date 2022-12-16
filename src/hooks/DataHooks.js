@@ -1,14 +1,8 @@
 import axios from "axios";
 import { useMutation, useQuery } from "react-query"
+import { useNavigate } from "react-router-dom";
 
 
-// const minum = {
-//   data: [],
-//   error: '',
-//   isLoading: ''
-// };
-
-// const { data, error } = minum;
 
 
 
@@ -37,9 +31,14 @@ export const BlogFetch = () => {
 
 
 export const BlogCrud = () => {
+  const nav = useNavigate();
   return useMutation((blog) => {
     return axios.post('https://639aa5e831877e43d672017c.mockapi.io/blogs', blog);
-
-  }, { refetchOnWindowFocus: false });
+  }, {
+    onSuccess: (data) => {
+      console.log('hello');
+      nav('/');
+    }
+  });
 }
 

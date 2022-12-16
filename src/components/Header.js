@@ -10,7 +10,7 @@ const Header = () => {
         <nav className='space-x-5 font-semibold '>
           <NavLink to='/' replace={true} className='hover:bg-orange-300 hover:text-white'>Home</NavLink>
           <NavLink to='/about' >About</NavLink>
-          <NavLink to='/' className=''>Create</NavLink>
+          <NavLink to='/crud' className=''>Create</NavLink>
           {/* <NavLink to='/sample/something' className=''>Create</NavLink>
           <NavLink to={`sample/${id}`} className=''>Create</NavLink> */}
         </nav>
