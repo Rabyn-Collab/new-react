@@ -33,9 +33,10 @@ const News = () => {
 
   const changeNews = (query) => {
     setCategory(query);
+
   }
 
-  console.log(catetgory);
+
   return (
     <div>
       <button onClick={() => changeNews('hollywood')} className='mr-4'>Hollywood</button>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useMutation, useQuery } from "react-query"
+import { QueryClient, useMutation, useQuery } from "react-query"
 import { useNavigate } from "react-router-dom";
 
 
@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 
 export const NewsFetch = (query) => {
-  return useQuery(['news', query], () => {
+
+  return useQuery(['news', query, 1], () => {
     return axios.get('https://free-news.p.rapidapi.com/v1/search', {
       params: {
         q: query
@@ -17,7 +18,9 @@ export const NewsFetch = (query) => {
         'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
       }
     });
-  }, { refetchOnWindowFocus: false, retry: false });
+  }, {
+    refetchOnWindowFocus: false, retry: false
+  });
 }
 
 export const BlogFetch = () => {
@@ -36,9 +39,36 @@ export const BlogCrud = () => {
     return axios.post('https://639aa5e831877e43d672017c.mockapi.io/blogs', blog);
   }, {
     onSuccess: (data) => {
-      console.log('hello');
       nav('/');
     }
   });
 }
 
+export const BlogEdit = () => {
+  const nav = useNavigate();
+
+  return useMutation((blog) => {
+    return axios.patch(`https://639aa5e831877e43d672017c.mockapi.io/blogs/${blog.id}`, blog);
+  }, {
+    onSuccess: (data) => {
+      nav('/');
+    }
+  });
+}
+
+
+export const BlogRemove = () => {
+  const nav = useNavigate();
+  const query = new QueryClient();
+  return useMutation((id) => {
+    return axios.delete(`https://639aa5e831877e43d672017c.mockapi.io/blogs/${id}`);
+  }, {
+    onSuccess: (data) => {
+      query.invalidateQueries('blog');
+
+      // console.log('hello');
+      // nav('/');
+    },
+
+  },);
+}

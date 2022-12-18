@@ -1,20 +1,31 @@
 import { useFormik } from 'formik'
 import React from 'react'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BlogCrud } from '../hooks/DataHooks';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { BlogCrud, BlogEdit } from '../hooks/DataHooks';
 
 const CrudForm = () => {
 
+  const person = {
+    id: 90,
+    name: 'asldkl;'
+  };
+
+  const { id, name } = person;
+
   const [validate, setValidate] = useState(false)
-  const nav = useNavigate();
+  const { state } = useLocation();
+
+
+
   const { mutate, data, isError, isLoading, error, isSuccess } = BlogCrud();
 
-  console.log(error);
+  const { mutate: mutat, isLoading: load } = BlogEdit();
+
   const formik = useFormik({
     initialValues: {
-      title: '',
-      body: ''
+      title: state?.title ?? '',
+      body: state?.body ?? ''
     },
     validateOnChange: validate,
     onSubmit: (val) => {
@@ -22,8 +33,16 @@ const CrudForm = () => {
         title: val.title,
         body: val.body
       };
-      console.log(val);
-      mutate(newBlog);
+      if (state !== null) {
+        mutat({
+          title: val.title,
+          body: val.body,
+          id: state.id
+        });
+      } else {
+        mutate(newBlog);
+      }
+
     },
     validate: (val) => {
       setValidate(true);
@@ -71,11 +90,13 @@ const CrudForm = () => {
 
           </div>
           {/* {formik.errors.some && <p className='text-pink-500'>{formik.errors.some}</p>} */}
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-[50%] " type="submit">
+
+          {isLoading || load ? <div className='flex items-center  justify-center space-x-3'>
+            <div className=' h-10 w-10 border-4 border-black rounded-full border-l-white animate-spin'></div>
+            <h1>Loading please wait</h1>
+          </div> : <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-[50%] " type="submit">
             Submit
-          </button>
-
-
+          </button>}
         </form>
 
       </div>
