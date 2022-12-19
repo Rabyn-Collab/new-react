@@ -1,6 +1,7 @@
 import axios from "axios";
-import { QueryClient, useMutation, useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -8,20 +9,23 @@ import { useNavigate } from "react-router-dom";
 
 export const NewsFetch = (query) => {
 
-  return useQuery(['news', query, 1], () => {
-    return axios.get('https://free-news.p.rapidapi.com/v1/search', {
+  return useQuery(['news', query], () => {
+
+    return axios.get('https://newsapi.org/v2/everything', {
       params: {
-        q: query
-      },
-      headers: {
-        'X-RapidAPI-Key': 'a5f227e63fmsh1662507e838257fp171f14jsna0bec840d641',
-        'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
+        q: query,
+        'apiKey': 'e526a219312a40a88b575f8738537e06'
       }
     });
   }, {
-    refetchOnWindowFocus: false, retry: false
+
+    refetchOnWindowFocus: false,
+
+    retry: false,
   });
 }
+
+
 
 export const BlogFetch = () => {
   return useQuery('blog', () => {
@@ -35,10 +39,12 @@ export const BlogFetch = () => {
 
 export const BlogCrud = () => {
   const nav = useNavigate();
+
   return useMutation((blog) => {
     return axios.post('https://639aa5e831877e43d672017c.mockapi.io/blogs', blog);
   }, {
     onSuccess: (data) => {
+
       nav('/');
     }
   });
@@ -51,6 +57,7 @@ export const BlogEdit = () => {
     return axios.patch(`https://639aa5e831877e43d672017c.mockapi.io/blogs/${blog.id}`, blog);
   }, {
     onSuccess: (data) => {
+
       nav('/');
     }
   });
@@ -59,7 +66,7 @@ export const BlogEdit = () => {
 
 export const BlogRemove = () => {
   const nav = useNavigate();
-  const query = new QueryClient();
+  const query = useQueryClient();
   return useMutation((id) => {
     return axios.delete(`https://639aa5e831877e43d672017c.mockapi.io/blogs/${id}`);
   }, {

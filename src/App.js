@@ -6,6 +6,7 @@ import About from './pages/About'
 import Detail from './pages/Detail'
 import Home from './pages/Home'
 import News from './pages/News'
+
 import NotFound from './pages/NotFound'
 import Tail from './pages/Tail'
 
